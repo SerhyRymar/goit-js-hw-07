@@ -22,7 +22,7 @@ const pictureGallery = craetePictureCardsMarkup(galleryItems);
 galleryContainer.innerHTML = pictureGallery;
 
 // 2.Реалізація делегування на div.gallery і отримання url великого зображення.
-galleryContainer.addEventListener("click", clickOnGalleryContainer);
+galleryContainer.addEventListener("click", clickOnGalleryContainer)
 
 function clickOnGalleryContainer(evt) {
 	evt.preventDefault();
@@ -32,15 +32,23 @@ function clickOnGalleryContainer(evt) {
 	}
 
 // 3.Відкриття модального вікна по кліку на елементі галереї.
-	const instance = basicLightbox.create(`
-    <img src="${evt.target.dataset.source}" width="800" height="600">
-`);
+	const instance = basicLightbox.create(
+		` <div class="modal"> <img src="${evt.target.dataset.source}" width="800" height="600"/> </div> `,
+		{
+			onShow: (instance) => {
+				galleryContainer.addEventListener("keydown", closeModal);
+			},
+			onClose: (instance) => {
+				galleryContainer.removeEventListener("keydown", closeModal);
+			},
+		}
+	);
 	instance.show();
 
-// 4.Закриття з клавіатури
-	galleryContainer.addEventListener("keydown", (e) => {
-		if (e.code === "Escape") {
+ // 4.Закриття з клавіатури
+	function closeModal(e) {
+		if (e.key === "Escape") {
 			instance.close();
 		}
-	});
+	}
 }

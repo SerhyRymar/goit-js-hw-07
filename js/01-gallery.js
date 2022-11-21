@@ -36,10 +36,10 @@ function clickOnGalleryContainer(evt) {
 		` <div class="modal"> <img src="${evt.target.dataset.source}" width="800" height="600"/> </div> `,
 		{
 			onShow: (instance) => {
-				galleryContainer.addEventListener("keydown", closeModal);
+				document.addEventListener("keydown", closeModal);
 			},
 			onClose: (instance) => {
-				galleryContainer.removeEventListener("keydown", closeModal);
+				document.removeEventListener("keydown", closeModal);
 			},
 		}
 	);
